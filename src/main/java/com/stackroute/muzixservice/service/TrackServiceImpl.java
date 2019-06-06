@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -52,7 +53,8 @@ public class TrackServiceImpl  implements TrackService{
 
     @Override
     public Track updateComments(Track track) throws TrackNotFoundException {
-        if (trackRepository.existsById(track.getTrackId())) {
+        Optional optional=trackRepository.findById(track.getTrackId());
+        if (optional.isPresent()) {
             Track track1 = trackRepository.findById(track.getTrackId()).get();
             track1.setTrackComments(track.getTrackComments());
             trackRepository.save(track1);
@@ -66,7 +68,7 @@ public class TrackServiceImpl  implements TrackService{
     public List<Track> getTrackByName(String trackName) throws TrackNotFoundException {
         List<Track> trackList=null;
         trackList=trackRepository.getTrackByName(trackName);
-        if(trackList.equals(null)){
+        if(trackList.isEmpty()){
             throw new TrackNotFoundException("track not found");
         }
         return trackList;
