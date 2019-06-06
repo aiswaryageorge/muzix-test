@@ -18,3 +18,4 @@
     Named it MuzixServiceImpl2 and
     used @Primary and
          @Qualifier annotations for the required implementation.
+ 12.created testcases.
